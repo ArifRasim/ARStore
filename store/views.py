@@ -5,14 +5,8 @@ from django.shortcuts import render, get_object_or_404
 from store.models import Product, Category
 
 
-def categories(request):
-    return {
-        'categories': Category.objects.all()
-    }
-
-
 def all_products(request):
-    products = Product.objects.all()
+    products = Product.products.all()
     context = {
         'products': products
     }
