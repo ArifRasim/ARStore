@@ -1,5 +1,5 @@
 from django.contrib.auth import get_user_model
-from django.contrib.auth.models import User
+from django.conf import settings
 from django.db import models
 
 # Create your models here.
@@ -28,7 +28,7 @@ class Category(models.Model):
 class Product(models.Model):
     title = models.CharField(max_length=255)
     category = models.ForeignKey(Category, related_name='product', on_delete=models.CASCADE)
-    created_by = models.ForeignKey(User, related_name='product_creator', on_delete=models.CASCADE)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='product_creator', on_delete=models.CASCADE)
     author = models.CharField(max_length=255, default='author')
     description = models.TextField(blank=True)
     image = models.ImageField(upload_to='images/', default='images/default.png')

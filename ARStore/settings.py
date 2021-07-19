@@ -29,7 +29,7 @@ SECRET_KEY = os.environ['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 # Application definition
 
@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'store',
     'cart',
-    # 'django.contrib.admin',
+    'django.contrib.admin',
+    'orders'
 
 ]
 
@@ -125,7 +126,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS=['static']
+STATICFILES_DIRS = ['static']
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -134,4 +135,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
-AUTH_USER_MODEL='accounts.UserBase'
+AUTH_USER_MODEL = 'accounts.UserBase'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/account/login'
+
+STRIPE_ENDPOINT_SECRET = 'whsec_TuquZWBAUBqW5sVnLrXcGqxAuiLn5mAp'
+
+PUBLISHABLE_KEY = 'pk_test_51JEYdQGDKcoJktMz66YmNLt71k9Z39dMl1yBQTbWFh7fJlGUALcA9VP3v2L2f2asaeDQpusFq1DfmvHcRmh0ECOe00bbyuAvbF'
+
+SECRET_KEY = 'sk_test_51JEYdQGDKcoJktMzd3Gu6X8gKtDwg2JSOo9cf59g0ZbcM39JKGisIseNSIUtoRCun8jlm5A4Kaely884kfMhOfvd00mRpeOQ7k'
+
+CART_SESSION_ID = 'cart'

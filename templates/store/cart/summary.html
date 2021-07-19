@@ -83,7 +83,7 @@
                     <div class="col">TOTAL PRICE</div>
                     <div id="cart_total_price" class="col text-right">&euro; {{ cart.get_total_sum }}</div>
                 </div>
-                <button class="btn">CHECKOUT</button>
+                <a href="{% url 'payment:cart' %}"><button type="button" class="btn btn-primary">Checkout</button></a>
             </div>
         </div>
     </div>

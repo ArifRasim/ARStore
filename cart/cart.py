@@ -1,5 +1,6 @@
 from decimal import Decimal
 
+from ARStore import settings
 from store.models import Product
 
 
@@ -7,9 +8,9 @@ class Cart():
 
     def __init__(self, request):
         self.session = request.session
-        cart = self.session.get('skey')
-        if 'skey' not in request.session:
-            cart = self.session['skey'] = {}
+        cart = self.session.get(settings.CART_SESSION_ID)
+        if settings.CART_SESSION_ID not in request.session:
+            cart = self.session[settings.CART_SESSION_ID] = {}
 
         self.cart = cart
 
@@ -53,7 +54,18 @@ class Cart():
             yield item
 
     def get_total_sum(self):
-        return sum(Decimal(item['price']) * item['qty'] for item in self.cart.values())
+        subtotal = sum(Decimal(item['price']) * item['qty'] for item in self.cart.values())
+        if subtotal == 0:
+            shipping = Decimal(0.00)
+        else:
+            shipping = Decimal(11.50)
+
+        total = subtotal + Decimal(shipping)
+        return total
 
     def save(self):
         self.session.modified = True
+
+    def clear(self):
+        del self.session[settings.CART_SESSION_ID]
+        self.save()
