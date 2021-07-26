@@ -45,12 +45,12 @@
                             Categories
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            {% for category in categories %}
-                                <li>
-                                    <a class="dropdown-item"
-                                       href="{% url 'store:category_list' slug=category.slug %}">{{ category.name|title }}</a>
-                                </li>
-                            {% endfor %}
+{#                            {% for category in categories %}#}
+{#                                <li>#}
+{#                                    <a class="dropdown-item"#}
+{#                                       href="{% url 'store:category_list' slug=category.slug %}">{{ category.name|title }}</a>#}
+{#                                </li>#}
+{#                            {% endfor %}#}
                             <li>
                                 <hr class="dropdown-divider">
                             </li>

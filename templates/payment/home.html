@@ -1,4 +1,5 @@
 {% extends "store/base.html" %}
+
 {% load static %}
 {% block title %}Payment{% endblock %}
 {% block content %}
@@ -30,7 +31,7 @@
               <h3 class="mb-3">Billing address</h3>
               <!-- Error messages in this element -->
               <div id="card-errors" class="a" role="alert"></div>
-              <form>
+              <form id="payment-form">
                 <div class="row g-3">
                   <div class="col-sm-7">
                     <label for="firstName" class="form-label">Customer Name</label>
