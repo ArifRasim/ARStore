@@ -1,9 +1,9 @@
+from django.contrib import messages
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, redirect
-
+from django.shortcuts import render, redirect, get_object_or_404
 # Create your views here.
 from django.template.loader import render_to_string
 from django.urls import reverse
@@ -14,6 +14,7 @@ from accounts.forms import RegisterForm, UserEditForm, UserAddressForm
 from accounts.models import Customer, Address
 from accounts.token import account_activation_token
 from orders.views import user_orders
+from store.models import Product
 
 
 def dashboard(request):
@@ -32,20 +33,27 @@ def register_view(request):
         if form.is_valid():
             user = form.save(commit=False)
             user.email = form.cleaned_data['email']
-            user.set_password = form.cleaned_data['password']
-            user.is_active = False
+            user.name = form.cleaned_data['user_name']
+            user.set_password(form.cleaned_data['password'])
+            user.is_active = True
             user.save()
 
             current_site = get_current_site(request)
             subject = 'Activate your account'
-            message = render_to_string('accounts/register/account_activation_email.html'), {
+            message = render_to_string('accounts/register/account_activation_email.html', {
                 'user': user,
                 'domain': current_site.domain,
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                 'token': account_activation_token.make_token(user)
             }
+                                       )
             user.email_user(subject=subject, message=message)
-        return HttpResponse('activation sent ')
+            user.is_active = True
+            return render(request, 'accounts/register/account_activation_email.html',
+                          {'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                           'token': account_activation_token.make_token(user)})
+        else:
+            return redirect('account:login')
     else:
         form = RegisterForm()
         return render(request, 'accounts/register/register.html', {'form': form})
@@ -130,6 +138,25 @@ def delete_address(request, id):
 
 @login_required
 def set_default_address(request, id):
-    Address.objects.filter(default=True,customer=request.user).update(default=False)
+    Address.objects.filter(default=True, customer=request.user).update(default=False)
     Address.objects.filter(pk=id, customer=request.user).update(default=True)
     return HttpResponseRedirect(reverse('account:addresses'))
+
+
+@login_required
+def add_to_wishlist(request, id):
+    product = get_object_or_404(Product, id=id)
+    if product.user_wishlist.filter(id=request.user.id).exists():
+        product.user_wishlist.remove(request.user)
+        messages.success(request, 'Removed ' + product.title + ' from your wishlist')
+
+    else:
+        product.user_wishlist.add(request.user)
+        messages.success(request, 'Added ' + product.title + ' to your wishlist')
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+
+@login_required
+def wishlist(request):
+    products = Product.objects.filter(user_wishlist=request.user)
+    return render(request, 'accounts/user/wishlist.html', {'wishlist': products})

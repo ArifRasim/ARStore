@@ -76,6 +76,7 @@ class Product(models.Model):
                                          error_messages={'name': {'max_length': _('The price must be max 999.99')}})
     created_at = models.DateTimeField(_('Created at'), auto_now=True, editable=False)
     updated_at = models.DateTimeField(_('Updated at'), auto_now=True, )
+    user_wishlist=models.ManyToManyField(settings.AUTH_USER_MODEL,blank=True,related_name='user_wishlist')
 
     class Meta:
         verbose_name_plural = _('Products')

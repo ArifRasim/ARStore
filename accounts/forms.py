@@ -5,9 +5,8 @@ from accounts.models import Customer, Address
 
 
 class RegisterForm(forms.ModelForm):
-    username = forms.CharField(
-        label='Enter Your Username', min_length=4, max_length=50,
-    )
+    user_name = forms.CharField(
+        label='Enter Username', min_length=4, max_length=50, help_text='Required')
     # first_name = forms.CharField(
     #     label='Enter Your First Name', min_length=4, max_length=50, help_text='Required'
     # )
@@ -24,14 +23,14 @@ class RegisterForm(forms.ModelForm):
 
     class Meta:
         model = Customer
-        fields = ('username', 'email',)
+        fields = ('user_name', 'email',)
 
     def clean_username(self):
-        username = self.cleaned_data['username'].lower()
-        user = Customer.objects.filter(username=username)
-        if user.count():
-            raise forms.ValidationError('Username is already taken !')
-        return username
+        user_name = self.cleaned_data['user_name'].lower()
+        r = Customer.objects.filter(user_name=user_name)
+        if r.count():
+            raise forms.ValidationError("Username already exists")
+        return user_name
 
     def clean_repeat_password(self):
         password = self.cleaned_data['password'].lower()
@@ -49,7 +48,7 @@ class RegisterForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['username'].widget.attrs.update(
+        self.fields['user_name'].widget.attrs.update(
             {'class': 'form-control mb-3', 'placeholder': 'Username'})
         self.fields['email'].widget.attrs.update(
             {'class': 'form-control mb-3', 'placeholder': 'E-mail', 'name': 'email', 'id': 'id_email'})
@@ -61,7 +60,7 @@ class RegisterForm(forms.ModelForm):
 
 class UserLoginForm(AuthenticationForm):
     username = forms.CharField(widget=forms.TextInput(
-        attrs={'class': 'form-control mb-3', 'placeholder': 'Username', 'id': 'login-username'}))
+        attrs={'class': 'form-control mb-3', 'placeholder': 'Name', 'id': 'login-username'}))
 
     password = forms.CharField(widget=forms.PasswordInput(
         attrs={'class': 'form-control ', 'placeholder': 'Password', 'id': 'login-password'}))
@@ -72,18 +71,18 @@ class UserEditForm(forms.ModelForm):
         label='Account email (can not be changed)', max_length=200, widget=forms.TextInput(
             attrs={'class': 'form-control mb-3', 'placeholder': 'email', 'id': 'form-email', 'readonly': 'readonly'}))
 
-    user_name = forms.CharField(
+    name = forms.CharField(
         label='Firstname', min_length=4, max_length=50, widget=forms.TextInput(
-            attrs={'class': 'form-control mb-3', 'placeholder': 'Username', 'id': 'form-firstname',
+            attrs={'class': 'form-control mb-3', 'placeholder': 'Nname', 'id': 'form-firstname',
                    'readonly': 'readonly'}))
 
     first_name = forms.CharField(
-        label='Username', min_length=4, max_length=50, widget=forms.TextInput(
+        label='Name', min_length=4, max_length=50, widget=forms.TextInput(
             attrs={'class': 'form-control mb-3', 'placeholder': 'Firstname', 'id': 'form-lastname'}))
 
     class Meta:
         model = Customer
-        fields = ('email', 'user_name', 'first_name',)
+        fields = ('email', 'name', 'first_name',)
 
 
 class PwdResetForm(PasswordResetForm):
@@ -122,7 +121,8 @@ class UserAddressForm(forms.ModelForm):
         self.fields["address_line_1"].widget.attrs.update(
             {"class": "form-control mb-2 account-form", "placeholder": "Full Name"}
         )
-        self.fields["address_line_1"].widget.attrs.update({"class": "form-control mb-2 account-form", "placeholder": "address_line_1"})
+        self.fields["address_line_1"].widget.attrs.update(
+            {"class": "form-control mb-2 account-form", "placeholder": "address_line_1"})
         self.fields["address_line_2"].widget.attrs.update(
             {"class": "form-control mb-2 account-form", "placeholder": "Full Name"}
         )

@@ -2,6 +2,7 @@ import uuid
 
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
+from django.core.mail import send_mail
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django_countries.fields import CountryField
@@ -36,7 +37,7 @@ class CustomAccountManager(BaseUserManager):
 
 class Customer(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_('email address'), unique=True)
-    name = models.CharField(unique=True, max_length=140)
+    name = models.CharField(max_length=140)
 
     is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
@@ -51,26 +52,36 @@ class Customer(AbstractBaseUser, PermissionsMixin):
         verbose_name = 'Accounts'
         verbose_name_plural = 'Accounts'
 
+    def email_user(self, subject, message):
+        send_mail(
+            subject,
+            message,
+            'l@1.com',
+            [self.email],
+            fail_silently=False,
+        )
+
     def __str__(self):
-        return self.name
+        return self.email
 
 
 class Address(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    customer=models.ForeignKey(Customer,verbose_name=_('Customer'),on_delete=models.CASCADE)
-    full_name=models.CharField(_('Full Name'),max_length=150)
-    phone=models.CharField(_('Phone'),max_length=150)
-    postcode=models.CharField(_('Post code'),max_length=150)
-    address_line_1=models.CharField(_('Address_line_1'),max_length=250)
-    address_line_2=models.CharField(_('Address_line_2'),max_length=250)
-    city=models.CharField(_('City'),max_length=150)
-    delivery_instructions=models.CharField(_('Delivery instructions'),max_length=150)
+    customer = models.ForeignKey(Customer, verbose_name=_('Customer'), on_delete=models.CASCADE)
+    full_name = models.CharField(_('Full Name'), max_length=150)
+    phone = models.CharField(_('Phone'), max_length=150)
+    postcode = models.CharField(_('Post code'), max_length=150)
+    address_line_1 = models.CharField(_('Address_line_1'), max_length=250)
+    address_line_2 = models.CharField(_('Address_line_2'), max_length=250)
+    city = models.CharField(_('City'), max_length=150)
+    delivery_instructions = models.CharField(_('Delivery instructions'), max_length=150)
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(auto_now=True)
-    default=models.BooleanField(_('Default'),default=False,)
+    default = models.BooleanField(_('Default'), default=False, )
 
     class Meta:
-        verbose_name='Address'
-        verbose_name_plural='Addresses'
+        verbose_name = 'Address'
+        verbose_name_plural = 'Addresses'
+
     def __str__(self):
         return 'Address'

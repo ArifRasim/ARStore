@@ -1,7 +1,15 @@
 {% extends 'store/base.html' %}
 
 {% block content %}
+
     <div class="container bootdey">
+        {% if messages %}
+            <div class="alert alert-warning" alert-{{ message.tags }} role="alert">
+                {% for message in messages %}
+                    {{ message|safe }} - <a href="{% url "account:wishlist" %}" class="alert-link">Your Wishlist</a>.
+                {% endfor %}
+            </div>
+        {% endif %}
         <div class="col-md-12">
             <section class="panel">
                 <div class="panel-body">
@@ -42,6 +50,11 @@
                                     type="button"><i class="fa fa-shopping-cart"></i> Add to Cart
                             </button>
                         </p>
+                        <p>
+                            <a href="{% url 'account:add_to_wishlist' product.id %}"><button  id="add-to-wishlist" value="{{ product.id }}" class="btn btn-round btn-danger"
+                                    type="button"><i class="fa fa-shopping-cart"></i> Add to Wishlist
+                            </button></a>
+                        </p>
                     </div>
                 </div>
             </section>
@@ -70,4 +83,27 @@
             })
         })
     </script>
+
+{#    <script>#}
+{#        $(document).on('click', '#add-to-wishlist', function (e) {#}
+{#            e.preventDefault()#}
+{#            $.ajax({#}
+{#                type: 'POST',#}
+{#                url: '{% url 'account:add_to_wishlist'  %}',#}
+{#                data: {#}
+{#                    product_id: $('#add-to-wishlist').val(),#}
+                    {#product_qty: $('#select option:selected').text(),#}
+{#                    csrfmiddlewaretoken: '{{csrf_token}}',#}
+{#                    action: 'POST'#}
+{#                },#}
+{#                success: function (json) {#}
+{#                    document.getElementById('cart-qty').innerHTML=json.qty#}
+{#                               console.log($('#select option:selected').text())#}
+{##}
+{#                },#}
+{#                error: function (xhr, errmsg, err) {#}
+{#                }#}
+{#            })#}
+{#        })#}
+{#    </script>#}
 {% endblock %}
