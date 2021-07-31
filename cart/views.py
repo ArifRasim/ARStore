@@ -38,7 +38,7 @@ def cart_remove(request):
         product = get_object_or_404(Product, id=product_id)
         cart.remove(product=product)
         cart_qty = cart.__len__()
-        cart_total_price = cart.get_total_sum()
+        cart_total_price = cart.get_total_price()
         response = JsonResponse({'cart_qty': cart_qty, 'cart_total_price': cart_total_price})
         return response
 
@@ -52,6 +52,6 @@ def cart_update(request):
         product = get_object_or_404(Product, id=product_id)
         cart.update(product=product, updated_qty=updated_qty)
         cart_qty=cart.__len__()
-        cart_total_price=cart.get_total_sum()
+        cart_total_price=cart.get_total_price()
         response = JsonResponse({'cart_qty': cart_qty,'cart_total_price':cart_total_price})
         return response

@@ -23,6 +23,6 @@ urlpatterns = [
                   path('', include('store.urls', namespace='store')),
                   path('cart/', include('cart.urls', namespace='cart')),
                   path('account/', include('accounts.urls', namespace='account')),
-                  path('payment/', include('payment.urls', namespace='payment')),
+                  path('checkout/', include('checkout.urls', namespace='checkout')),
                   path('orders/', include('orders.urls', namespace='orders')),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

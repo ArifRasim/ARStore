@@ -13,7 +13,7 @@ def add(request):
     if request.POST.get('action') == 'POST':
         user_id = request.user.id
         order_key = request.POST.get('order_key')
-        cart_total = cart.get_total_sum()
+        cart_total = cart.get_total_price()
 
         if Order.objects.filter(order_key=order_key).exists():
             pass

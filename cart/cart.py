@@ -1,6 +1,7 @@
 from decimal import Decimal
 
 from ARStore import settings
+from checkout.models import DeliveryOptions
 from store.models import Product
 
 
@@ -53,19 +54,37 @@ class Cart():
             item['total_price'] = item['price'] * item['qty']
             yield item
 
-    def get_total_sum(self):
-        subtotal = sum(Decimal(item['price']) * item['qty'] for item in self.cart.values())
-        if subtotal == 0:
-            shipping = Decimal(0.00)
-        else:
-            shipping = Decimal(11.50)
-
-        total = subtotal + Decimal(shipping)
-        return total
+    def get_subtotal_price(self):
+        return sum(Decimal(item["price"]) * item["qty"] for item in self.cart.values())
 
     def save(self):
         self.session.modified = True
 
     def clear(self):
         del self.session[settings.CART_SESSION_ID]
+        del self.session['address']
+        del self.session['purchase']
         self.save()
+
+    def cart_update_delivery(self, deliveryprice=0):
+        subtotal = sum(Decimal(item["price"]) * item["qty"] for item in self.cart.values())
+        total = subtotal + Decimal(deliveryprice)
+        return total
+
+    def get_delivery_price(self):
+        new_price = 0.00
+
+        if "purchase" in self.session:
+            new_price = DeliveryOptions.objects.get(id=self.session["purchase"]["delivery_id"]).delivery_price
+
+        return new_price
+
+    def get_total_price(self):
+        new_price = 0.00
+        subtotal = sum(Decimal(item["price"]) * item["qty"] for item in self.cart.values())
+
+        if "purchase" in self.session:
+            new_price = DeliveryOptions.objects.get(id=self.session["purchase"]["delivery_id"]).delivery_price
+
+        total = subtotal + Decimal(new_price)
+        return total

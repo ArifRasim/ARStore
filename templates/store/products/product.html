@@ -15,7 +15,12 @@
                 <div class="panel-body">
                     <div class="col-md-6">
                         <div class="pro-img-details">
-                            <img src="{{ product.image.url }}" alt="">
+                            {% for image in product.product_image.all %}
+              {% if image.is_feature%}
+              <img class="img-fluid" alt="Responsive image" src="{{ image.image.url }}"
+                alt="{{ image.image.alt_text }}">
+              {% endif %}
+              {% endfor %}
                         </div>
 
                     </div>

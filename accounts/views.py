@@ -13,6 +13,7 @@ from django.utils.http import urlsafe_base64_encode
 from accounts.forms import RegisterForm, UserEditForm, UserAddressForm
 from accounts.models import Customer, Address
 from accounts.token import account_activation_token
+from orders.models import Order
 from orders.views import user_orders
 from store.models import Product
 
@@ -140,7 +141,12 @@ def delete_address(request, id):
 def set_default_address(request, id):
     Address.objects.filter(default=True, customer=request.user).update(default=False)
     Address.objects.filter(pk=id, customer=request.user).update(default=True)
-    return HttpResponseRedirect(reverse('account:addresses'))
+
+
+    if 'delivery_address' in request.META.get('HTTP_REFERER'):
+        return redirect('checkout:delivery_address')
+    else:
+        return HttpResponseRedirect(reverse('account:addresses'))
 
 
 @login_required
@@ -160,3 +166,10 @@ def add_to_wishlist(request, id):
 def wishlist(request):
     products = Product.objects.filter(user_wishlist=request.user)
     return render(request, 'accounts/user/wishlist.html', {'wishlist': products})
+
+@login_required
+def user_orders(request):
+    user_id=request.user.id
+    orders=Order.objects.filter(user_id=user_id)
+
+    return render(request,'accounts/user/user_orders.html',{'orders':orders})

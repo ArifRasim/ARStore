@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'orders',
     'mptt',
+    'checkout'
     # 'payment'
 
 ]

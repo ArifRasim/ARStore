@@ -81,9 +81,9 @@
                 </form>
                 <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
                     <div class="col">TOTAL PRICE</div>
-                    <div id="cart_total_price" class="col text-right">&euro; {{ cart.get_total_sum }}</div>
+                    <div id="cart_total_price" class="col text-right">&euro; {{ cart.get_total_price }}</div>
                 </div>
-                <a href="{% url 'payment:cart' %}">
+                <a href="{% url 'checkout:delivery_options' %}">
                     <button type="button" class="btn btn-primary">Checkout</button>
                 </a>
             </div>

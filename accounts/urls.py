@@ -5,7 +5,7 @@ from django.views.generic import TemplateView
 
 from accounts.forms import UserLoginForm, PwdResetForm, PwdResetConfirmForm
 from accounts.views import register_view, activate_account, dashboard, edit_details, delete_user, addresses_view, \
-    add_address, edit_address, delete_address, set_default_address, add_to_wishlist, wishlist
+    add_address, edit_address, delete_address, set_default_address, add_to_wishlist, wishlist, user_orders
 
 app_name = 'account'
 urlpatterns = [
@@ -37,5 +37,6 @@ urlpatterns = [
     path('adresses/default/<slug:id>', set_default_address, name='set_default_address'),
     path('wishlist/add/<int:id>', add_to_wishlist, name='add_to_wishlist'),
     path('wishlist/', wishlist, name='wishlist'),
+    path('orders/', user_orders, name='user_orders'),
 
 ]
