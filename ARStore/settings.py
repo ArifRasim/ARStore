@@ -34,18 +34,18 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 # Application definition
 
 INSTALLED_APPS = [
-    'accounts',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'store',
-    'cart',
+    'ARStore.apps.accounts',
+    'ARStore.apps.store',
+    'ARStore.apps.cart',
     'django.contrib.admin',
-    'orders',
+    'ARStore.apps.orders',
     'mptt',
-    'checkout'
+    'ARStore.apps.checkout'
     # 'payment'
 
 ]
@@ -74,8 +74,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'store.context_processor.all_categories',
-                'cart.context_processors.cart',
+                'ARStore.apps.store.context_processor.all_categories',
+                'ARStore.apps.cart.context_processors.cart',
 
             ],
         },
