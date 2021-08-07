@@ -1,8 +1,8 @@
 from django.urls import path
 
-from ARStore.apps.orders.views import add
+# from ARStore.apps.orders.views import add_order
 
 app_name = 'orders'
 urlpatterns = [
-    path('add/', add, name='add')
+    # path('add/', add_order, name='add')
 ]

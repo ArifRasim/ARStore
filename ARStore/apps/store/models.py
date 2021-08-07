@@ -95,6 +95,13 @@ class ProductSpecificationValue(models.Model):
     specification = models.ForeignKey(ProductSpecification, on_delete=models.RESTRICT)
     value = models.CharField(max_length=255, help_text=_('Max length is 255'), verbose_name=_('Value'))
 
+    class Meta:
+        verbose_name = _("Product Specification Value")
+        verbose_name_plural = _("Product Specification Values")
+
+    def __str__(self):
+        return self.value
+
 
 class ProductImage(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE,related_name='product_image')

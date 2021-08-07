@@ -27,8 +27,8 @@ class RegisterForm(forms.ModelForm):
 
     def clean_username(self):
         user_name = self.cleaned_data['user_name'].lower()
-        r = Customer.objects.filter(user_name=user_name)
-        if r.count():
+        user = Customer.objects.filter(name=user_name)
+        if user.count():
             raise forms.ValidationError("Username already exists")
         return user_name
 
@@ -71,18 +71,18 @@ class UserEditForm(forms.ModelForm):
         label='Account email (can not be changed)', max_length=200, widget=forms.TextInput(
             attrs={'class': 'form-control mb-3', 'placeholder': 'email', 'id': 'form-email', 'readonly': 'readonly'}))
 
-    name = forms.CharField(
-        label='Firstname', min_length=4, max_length=50, widget=forms.TextInput(
-            attrs={'class': 'form-control mb-3', 'placeholder': 'Nname', 'id': 'form-firstname',
-                   'readonly': 'readonly'}))
+    # name = forms.CharField(
+    #     label='Firstname', min_length=4, max_length=50, widget=forms.TextInput(
+    #         attrs={'class': 'form-control mb-3', 'placeholder': 'Nname', 'id': 'form-firstname',
+    #                'readonly': 'readonly'}))
 
-    first_name = forms.CharField(
+    name = forms.CharField(
         label='Name', min_length=4, max_length=50, widget=forms.TextInput(
-            attrs={'class': 'form-control mb-3', 'placeholder': 'Firstname', 'id': 'form-lastname'}))
+            attrs={'class': 'form-control mb-3', 'placeholder': 'Full Name', 'id': 'form-lastname'}))
 
     class Meta:
         model = Customer
-        fields = ('email', 'name', 'first_name',)
+        fields = ('email', 'name',)
 
 
 class PwdResetForm(PasswordResetForm):
@@ -90,11 +90,11 @@ class PwdResetForm(PasswordResetForm):
         attrs={'class': 'form-control mb-3', 'placeholder': 'Email', 'id': 'form-email'}))
 
     def clean_email(self):
-        email = self.cleaned_data['email']
+        email = self.cleaned_data.get('email',None)
         u = Customer.objects.filter(email=email)
         if not u:
             raise forms.ValidationError(
-                'Unfortunatley we can not find that email address')
+                'Unfortunately we can not find that email address')
         return email
 
 

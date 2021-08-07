@@ -3,7 +3,7 @@
 
 {% block sub_content %}
 <div class="col-6 mx-auto">
-  <h1 class="h3">Create/Edit Address</h1>
+  <h1 class="h3">Address</h1>
   <div>Add a new delivery <b>address</b> and delivery preferences</div>
   <hr />
   <form name="address_form" class="account-form" method="post" enctype="multipart/form-data">
@@ -26,7 +26,7 @@
     <label class="small fw-bold">{{ form.postcode.label}}</label>
     {{ form.postcode }}
     <button class="btn btn-primary btn-block py-2 mb-4 mt-4 fw-bold w-100" type="button" value="Submit" onclick="submitForm()">
-    Add Address
+    Submit
     </button>
   </form>
 

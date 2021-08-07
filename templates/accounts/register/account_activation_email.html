@@ -1,5 +1,12 @@
+{% extends 'store/base.html' %}
 {% autoescape off %}
-<h1>Hi {{user.username }}</h1>
-    <p>Your account has been approved </p>
-{#    <a href="http://{{ domain }}{% url 'account:activate' uidb64=uid token=token %}"> click</a>#}
+    {% block content %}
+        <div class="text-center">
+            <h1>Welcome</h1>
+            <p>Your account has been approved </p>
+            <a href="{% url 'account:login' %}">Continue</a>
+            {#    <a href="http://{{ domain }}{% url 'account:activate' uidb64=uid token=token %}"> click</a>#}
+        </div>
+    {% endblock %}
+
 {% endautoescape %}

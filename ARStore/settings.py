@@ -45,8 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'ARStore.apps.orders',
     'mptt',
-    'ARStore.apps.checkout'
-    # 'payment'
+    'ARStore.apps.checkout',
 
 ]
 

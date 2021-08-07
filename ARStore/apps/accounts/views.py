@@ -1,76 +1,99 @@
 from django.contrib import messages
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.sites.shortcuts import get_current_site
+from django.core.paginator import Paginator
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 # Create your views here.
 from django.template.loader import render_to_string
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode
+from django.views.generic import CreateView, TemplateView, ListView, DetailView
 
 from ARStore.apps.accounts.forms import RegisterForm, UserEditForm, UserAddressForm
 from ARStore.apps.accounts.models import Customer, Address
+# from ARStore.apps.accounts.tests.test_account_views import DetailsView
 from ARStore.apps.accounts.token import account_activation_token
 from ARStore.apps.orders.models import Order
-from ARStore.apps.orders.views import user_orders
+# from ARStore.apps.orders.views import user_orders
 from ARStore.apps.store.models import Product
 
 
-def dashboard(request):
-    orders = user_orders(request)
-    return render(request, 'accounts/user/dashboard.html', {'orders': orders})
-    # {'section': 'profile',
-    #  'orders': orders})
+# @login_required
+# def dashboard(request):
+#     orders = user_orders(request)
+#     return render(request, 'accounts/user/dashboard.html', {'orders': orders})
+#     # {'section': 'profile',
+#     #  'orders': orders})
 
 
-def register_view(request):
-    # if request.user.is_authenticated:
-    #     return redirect('/')
+class DashboardView(LoginRequiredMixin, TemplateView):
+    model = Customer
+    template_name = 'accounts/user/dashboard.html'
 
-    if request.method == 'POST':
-        form = RegisterForm(request.POST)
-        if form.is_valid():
-            user = form.save(commit=False)
-            user.email = form.cleaned_data['email']
-            user.name = form.cleaned_data['user_name']
-            user.set_password(form.cleaned_data['password'])
-            user.is_active = True
-            user.save()
-
-            current_site = get_current_site(request)
-            subject = 'Activate your account'
-            message = render_to_string('accounts/register/account_activation_email.html', {
-                'user': user,
-                'domain': current_site.domain,
-                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                'token': account_activation_token.make_token(user)
-            }
-                                       )
-            user.email_user(subject=subject, message=message)
-            user.is_active = True
-            return render(request, 'accounts/register/account_activation_email.html',
-                          {'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                           'token': account_activation_token.make_token(user)})
-        else:
-            return redirect('account:login')
-    else:
-        form = RegisterForm()
-        return render(request, 'accounts/register/register.html', {'form': form})
+    # def get_context_data(self,**kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     orders = Order.objects.filter(user_id=self.request.user.id)
+    #     context['orders'] = orders
+    #     return context
 
 
-def activate_account(request, uidb64, token):
-    try:
-        uid = force_text(urlsafe_base64_encode(uidb64))
-        user = Customer.objects.get(pk=uid)
-        if user is not None and account_activation_token.check_token(user, token):
-            user.is_active = True
-            user.save()
-            login(request, user)
-            return redirect('store:all_products')
-    except:
-        pass
+class RegisterView(CreateView):
+    form_class = RegisterForm
+    template_name = 'accounts/register/register.html'
+    success_url = reverse_lazy('account:login')
+
+
+# def register_view(request):
+#     if request.user.is_authenticated:
+#         return redirect('account:dashboard')
+#
+#     if request.method == 'POST':
+#         form = RegisterForm(request.POST)
+#         if form.is_valid():
+#             user = form.save(commit=False)
+#             user.email = form.cleaned_data['email']
+#             user.name = form.cleaned_data['user_name']
+#             user.set_password(form.cleaned_data['password'])
+#             user.is_active = True
+#             user.save()
+#
+#             current_site = get_current_site(request)
+#             # subject = 'Activate your account'
+#             # message = render_to_string('accounts/register/account_activation_email.html', {
+#             #     'user': user,
+#             #     'domain': current_site.domain,
+#             #     'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+#             #     'token': account_activation_token.make_token(user)
+#             # }
+#             #                            )
+#             # user.email_user(subject=subject, message=message)
+#             user.is_active = True
+#             return render(request, 'accounts/register/account_activation_email.html',)
+#                           # {'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+#                           #  'token': account_activation_token.make_token(user)})
+#         else:
+#             messages.success(request, 'There was an error try again')
+#             return render(request,'accounts/register/register.html',status=400)
+#     else:
+#         form = RegisterForm()
+#         return render(request, 'accounts/register/register.html', {'form': form})
+
+
+# def activate_account(request, uidb64, token):
+#     try:
+#         uid = force_text(urlsafe_base64_encode(uidb64))
+#         user = Customer.objects.get(pk=uid)
+#         if user is not None and account_activation_token.check_token(user, token):
+#             user.is_active = True
+#             user.save()
+#             login(request, user)
+#             return redirect('store:all_products')
+#     except:
+#         pass
 
 
 @login_required
@@ -80,6 +103,10 @@ def edit_details(request):
 
         if user_form.is_valid():
             user_form.save()
+            messages.success(request, 'Your changes were applied successfully.')
+        else:
+            messages.success(request, 'There was an error try again')
+            return render(request, 'accounts/user/edit_details.html', status=400)
     else:
         user_form = UserEditForm(instance=request.user)
 
@@ -89,7 +116,7 @@ def edit_details(request):
 
 @login_required
 def delete_user(request):
-    user = Customer.objects.get(username=request.user)
+    user = Customer.objects.get(id=request.user.id)
     user.is_active = False
     user.save()
     logout(request)
@@ -111,6 +138,8 @@ def add_address(request):
             address_form.customer = request.user
             address_form.save()
             return HttpResponseRedirect(reverse('account:addresses'))
+        else:
+            return HttpResponse('Bad request!', status=400)
     else:
         address_form = UserAddressForm()
     return render(request, 'accounts/user/add_address.html', {"form": address_form})
@@ -126,6 +155,8 @@ def edit_address(request, id):
             address_form.customer = request.user
             address_form.save()
             return HttpResponseRedirect(reverse('account:addresses'))
+        else:
+            return HttpResponse('Bad request!', status=400)
     else:
         address_form = UserAddressForm(instance=address)
     return render(request, 'accounts/user/add_address.html', {"form": address_form})
@@ -141,7 +172,6 @@ def delete_address(request, id):
 def set_default_address(request, id):
     Address.objects.filter(default=True, customer=request.user).update(default=False)
     Address.objects.filter(pk=id, customer=request.user).update(default=True)
-
 
     if 'delivery_address' in request.META.get('HTTP_REFERER'):
         return redirect('checkout:delivery_address')
@@ -159,17 +189,24 @@ def add_to_wishlist(request, id):
     else:
         product.user_wishlist.add(request.user)
         messages.success(request, 'Added ' + product.title + ' to your wishlist')
-    return HttpResponseRedirect(request.META['HTTP_REFERER'])
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 @login_required
 def wishlist(request):
     products = Product.objects.filter(user_wishlist=request.user)
+    pagination = Paginator(products, 2)
+    page = request.GET.get('page')
+    products = pagination.get_page(page)
     return render(request, 'accounts/user/wishlist.html', {'wishlist': products})
+
 
 @login_required
 def user_orders(request):
-    user_id=request.user.id
-    orders=Order.objects.filter(user_id=user_id)
+    user_id = request.user.id
+    orders = Order.objects.filter(user_id=user_id)
 
-    return render(request, 'accounts/user/user_orders.html', {'orders':orders})
+    pagination = Paginator(orders, 2)
+    page = request.GET.get('page')
+    orders = pagination.get_page(page)
+    return render(request, 'accounts/user/user_orders.html', {'orders': orders})

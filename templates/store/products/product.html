@@ -1,72 +1,70 @@
-{% extends 'store/base.html' %}
-
+{% extends "store/base.html" %}
+{% load static %}
+{% block stylesheet %}{% static 'css/main.css' %}{% endblock %}
+{% block title %}
+{% if product %}{{ product.title }}{% else %}Product{% endif %}
+{% endblock %}
 {% block content %}
 
-    <div class="container bootdey">
-        {% if messages %}
-            <div class="alert alert-warning" alert-{{ message.tags }} role="alert">
-                {% for message in messages %}
-                    {{ message|safe }} - <a href="{% url "account:wishlist" %}" class="alert-link">Your Wishlist</a>.
-                {% endfor %}
-            </div>
-        {% endif %}
-        <div class="col-md-12">
-            <section class="panel">
-                <div class="panel-body">
-                    <div class="col-md-6">
-                        <div class="pro-img-details">
-                            {% for image in product.product_image.all %}
-              {% if image.is_feature%}
-              <img class="img-fluid" alt="Responsive image" src="{{ image.image.url }}"
-                alt="{{ image.image.alt_text }}">
-              {% endif %}
-              {% endfor %}
-                        </div>
+<div class="container">
+{% if messages %}
+<div class="alert alert-warning" alert-{{ message.tags }}" role="alert">
+{% for message in messages  %}
+  {{message|safe}} - <a href="{% url "account:wishlist" %}" class="alert-link">Your Wishlist</a>.
+{% endfor %}
+</div>
+{% endif %}
+  <div class="row g-3">
+    <div class="col-md-5 ps-3 col-lg-5 order-md-last p-0 order-1">
+      <div class="d-grid gap-2">
+        <div class="d-flex d-flex-inline justify-content-between">
+          <div><span class="h3">Price: €{{ product.price }}</span>
+          </div>
 
-                    </div>
-                    <div class="col-md-6">
-                        <h4 class="pro-d-title">
-                            <a href="#" class="">
-                                {{ product.title }}
-                            </a>
-                        </h4>
-                        <p>
-                            {{ product.description }}
-                        </p>
-
-                        <div class="m-bot15"><strong>Price: </strong> <span
-                                class="amount-old">${{ product.price }}</span><span class="pro-price"></span></div>
-                        <div class="col">
-                            <div class="row p-3">
-                                <div class="col-6">
-                                    <label for="select">Quantity</label>
-                                    <select id="select">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <p>
-                            <button id="add-to-cart" value="{{ product.id }}" class="btn btn-round btn-danger"
-                                    type="button"><i class="fa fa-shopping-cart"></i> Add to Cart
-                            </button>
-                        </p>
-                        <p>
-                            <a href="{% url 'account:add_to_wishlist' product.id %}"><button  id="add-to-wishlist" value="{{ product.id }}" class="btn btn-round btn-danger"
-                                    type="button"><i class="fa fa-shopping-cart"></i> Add to Wishlist
-                            </button></a>
-                        </p>
-                    </div>
-                </div>
-            </section>
         </div>
+        <hr>
+        <button type="button" id="add-to-cart" value="{{product.id}}" class="btn btn-success fw500">Add to
+          cart</button>
+        <a href="{% url 'account:add_to_wishlist' product.id %}" class="btn btn-light fw500" role="button" aria-disabled="true">Add to WishList</a>
+          <div>
+            <label for="select">Qty</label>
+            <select id="select" class="h6 store-select-dropdown">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+            </select>
+          </div>
+      </div>
     </div>
 
-    <script>
+    <div class="col-md-7 col-lg-7 p-0">
+      <div class="card mb-3 border-0">
+        <div class="row g-0">
+          <div class="col-md-12">
+            <div class="card-body p-1">
+              <h1 class="mb-0 h2 pe-4 pb-4">{{ product.title }}</h1>
+              <div class="bg-light">
+
+                {% for image in product.product_image.all %}
+                {% if image.is_feature %}
+                <img class="img-fluid mx-auto d-block" width="200px" alt="Responsive image" src="{{ image.image.url }}"
+                  alt="{{ image.image.alt_text }}">
+                {% else %}
+                <img class="img-fluid d-block-inline pt-3" width="100px" alt="Responsive image"
+                  src="{{ image.image.url }}" alt="{{ image.image.alt_text }}">
+                {% endif %}
+                {% endfor %}
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
         $(document).on('click', '#add-to-cart', function (e) {
             e.preventDefault()
             $.ajax({
@@ -89,26 +87,4 @@
         })
     </script>
 
-{#    <script>#}
-{#        $(document).on('click', '#add-to-wishlist', function (e) {#}
-{#            e.preventDefault()#}
-{#            $.ajax({#}
-{#                type: 'POST',#}
-{#                url: '{% url 'account:add_to_wishlist'  %}',#}
-{#                data: {#}
-{#                    product_id: $('#add-to-wishlist').val(),#}
-                    {#product_qty: $('#select option:selected').text(),#}
-{#                    csrfmiddlewaretoken: '{{csrf_token}}',#}
-{#                    action: 'POST'#}
-{#                },#}
-{#                success: function (json) {#}
-{#                    document.getElementById('cart-qty').innerHTML=json.qty#}
-{#                               console.log($('#select option:selected').text())#}
-{##}
-{#                },#}
-{#                error: function (xhr, errmsg, err) {#}
-{#                }#}
-{#            })#}
-{#        })#}
-{#    </script>#}
-{% endblock %}
+  {% endblock %}

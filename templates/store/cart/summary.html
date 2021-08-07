@@ -5,6 +5,12 @@
 {% endblock %}
 
 {% block content %}
+{% if not cart %}
+                    <div class="text-center">
+                    <h3 style="text-align: center">Your Cart is empty</h3>
+                    <a href="{% url 'store:all_products' %}"><p>Continue shopping</p></a>
+                    </div>
+                {% else %}
     <div class="card">
         <div class="row">
             <div class="col-md-8 cart">
@@ -16,79 +22,95 @@
                         {#                        <div class="col align-self-center text-right text-muted">{{ cart|length }} Items</div>#}
                     </div>
                 </div>
-                {% for product in cart %}
-                    {% with item=product.product %}
 
-                        <div data-index="{{ item.id }}" class="row border-top border-bottom">
-                            <div class="row main align-items-center">
-                                <div class="col-2"><img class="img-fluid" src="{{ item.image.url }}"></div>
-                                <div class="col">
-                                    <div class="row">{{ item.title }}</div>
-                                </div>
-                                <div class="col">
-                                    <div class="row p-3">
-                                        <div class="col-6">
-                                            <label for="select">Quantity</label>
-                                            <select id="select{{ item.id }}">
-                                                <option selected> {{ product.qty }}</option>
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                            </select>
+
+                    {% for product in cart %}
+                        {% with item=product.product %}
+                            <div data-index="{{ item.id }}" class="row border-top border-bottom">
+                                <div class="row main align-items-center">
+                                    <div class="col-md-2 d-none d-md-block">
+                                        {% for image in item.product_image.all %}
+                                            {% if image.is_feature %}
+                                                <div class="text-center">
+                                                    <img class="rounded" src="{{ image.image.url }}"
+                                                         alt="{{ image.image.alt_text }}">
+                                                </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                    <div class="col">
+                                        <div class="row"></div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="row">{{ item.title }}</div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="row p-3">
+                                            <div class="col-6">
+                                                <label for="select">Quantity</label>
+                                                <select id="select{{ item.id }}">
+                                                    <option selected> {{ product.qty }}</option>
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
+                                                    <option value="5">5</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col">
-                                    <button type="button" data-index="{{ item.id }}"
-                                            class="btn btn-outline-secondary btn-sm update-btn">Update
-                                    </button>
-                                </div>
-                                <div class="col">&euro;{{ item.price }}
-                                    <span type="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                             fill="currentColor" data-index="{{ item.id }}"
-                                                             class="bi bi-x-lg remove-from-cart" viewBox="0 0 16 16">
+                                    <div class="col">
+                                        <button type="button" data-index="{{ item.id }}"
+                                                class="btn btn-outline-secondary btn-sm update-btn">Update
+                                        </button>
+                                    </div>
+                                    <div class="col">&euro;{{ item.price }}
+                                        <span type="button"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                                 height="16"
+                                                                 fill="currentColor" data-index="{{ item.id }}"
+                                                                 class="bi bi-x-lg remove-from-cart"
+                                                                 viewBox="0 0 16 16">
   <path d="M1.293 1.293a1 1 0 0 1 1.414 0L8 6.586l5.293-5.293a1 1 0 1 1 1.414 1.414L9.414 8l5.293 5.293a1 1 0 0 1-1.414 1.414L8 9.414l-5.293 5.293a1 1 0 0 1-1.414-1.414L6.586 8 1.293 2.707a1 1 0 0 1 0-1.414z"></path>
 </svg>
                             </span>
+                                    </div>
                                 </div>
                             </div>
+                        {% endwith %}
+                    {% endfor %}
+                    {#                <div class="back-to-shop"><a style="text-align: center;align-content: center" href="/">#}
+                    {#                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"#}
+                    {#                         class="bi bi-arrow-bar-left" viewBox="0 0 16 16">#}
+                    {#                        <path fill-rule="evenodd"#}
+                    {#                              d="M12.5 15a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5zM10 8a.5.5 0 0 1-.5.5H3.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L3.707 7.5H9.5a.5.5 0 0 1 .5.5z"/>#}
+                    {#                    </svg>#}
+                    {#                </a><span class="text-muted">Back to shop</span></div>#}
+                    </div>
+                    <div class="col-md-4 summary">
+                        <div>
+                            <h5><b>Summary</b></h5>
                         </div>
-                    {% endwith %}
-                {% endfor %}
-                {#                <div class="back-to-shop"><a style="text-align: center;align-content: center" href="/">#}
-                {#                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"#}
-                {#                         class="bi bi-arrow-bar-left" viewBox="0 0 16 16">#}
-                {#                        <path fill-rule="evenodd"#}
-                {#                              d="M12.5 15a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5zM10 8a.5.5 0 0 1-.5.5H3.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L3.707 7.5H9.5a.5.5 0 0 1 .5.5z"/>#}
-                {#                    </svg>#}
-                {#                </a><span class="text-muted">Back to shop</span></div>#}
-            </div>
-            <div class="col-md-4 summary">
-                <div>
-                    <h5><b>Summary</b></h5>
-                </div>
-                <hr>
-                <div class="row">
-                    <div class="col">Items {{ cart|length }}</div>
-                </div>
-                <form>
-                    <p>SHIPPING</p> <select>
-                    <option class="text-muted">Standard-Delivery- &euro;5.00</option>
-                </select>
-                    <p>PROMO CODE</p> <input id="code" placeholder="Enter your code">
-                </form>
-                <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
-                    <div class="col">TOTAL PRICE</div>
-                    <div id="cart_total_price" class="col text-right">&euro; {{ cart.get_total_price }}</div>
-                </div>
-                <a href="{% url 'checkout:delivery_options' %}">
-                    <button type="button" class="btn btn-primary">Checkout</button>
-                </a>
-            </div>
-        </div>
-    </div>
+                        <hr>
+                        <div class="row">
+                            <div id="cart_total_items" class="col">Total amount of items: {{ cart|length }}</div>
+                        </div>
+                        {#                <form>#}
+                        {#                    <p>SHIPPING</p> <select>#}
+                        {#                    <option class="text-muted">Standard-Delivery- &euro;5.00</option>#}
+                        {#                </select>#}
+                        {#                    <p>PROMO CODE</p> <input id="code" placeholder="Enter your code">#}
+                        {#                </form>#}
+                        <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
+                            <div class="col">TOTAL PRICE:</div>
+                            <div id="cart_total_price" class="col text-right">&euro; {{ cart.get_total_price }}</div>
+                        </div>
+                        <a href="{% url 'checkout:delivery_options' %}">
+                            <button type="button" class="btn btn-primary">Checkout</button>
+                        </a>
+                    </div>
+                    </div>
+                    </div>
+                {% endif %}
 
     <script>
         $(document).on('click', '.remove-from-cart', function (e) {
@@ -128,6 +150,7 @@
                 },
                 success: function (json) {
                     $('#select option:selected').text(updated_qty)
+                    document.getElementById('cart_total_items').innerHTML = `Total amount of items: ${json.cart_qty}`
                     document.getElementById('cart-qty').innerHTML = json.cart_qty
                     document.getElementById('cart_total_price').innerHTML = `&euro; ${json.cart_total_price}`
                 },

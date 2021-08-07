@@ -2,8 +2,10 @@ import json
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from django.views.generic import ListView
 from paypalcheckoutsdk.orders import OrdersGetRequest
 
 from .paypal import PayPalClient
@@ -14,31 +16,40 @@ from ARStore.apps.checkout.models import DeliveryOptions
 from ARStore.apps.orders.models import OrderItem, Order
 
 
-@login_required
-def delivery_options(request):
-    delivery_options = DeliveryOptions.objects.filter(is_active=True)
-    return render(request, 'checkout/delivery_options.html', {'delivery_options': delivery_options})
+# @login_required
+# def delivery_options(request):
+#     delivery_options = DeliveryOptions.objects.filter(is_active=True)
+#     return render(request, 'checkout/delivery_options.html', {'delivery_options': delivery_options})
+
+
+class DeliveryOptionsView(LoginRequiredMixin, ListView):
+    model = DeliveryOptions
+    template_name = 'checkout/delivery_options.html'
+    context_object_name = 'delivery_options'
+
+    def get_queryset(self):
+        qs = super(DeliveryOptionsView, self).get_queryset()
+        return qs.filter(is_active=True)
 
 
 @login_required
 def cart_update_delivery(request):
     cart = Cart(request)
-    if request.POST.get('action') == 'POST':
-        delivery_option = request.POST.get('delivery_option')
-        delivery_type = DeliveryOptions.objects.get(id=delivery_option)
-        cart_updated_price = cart.cart_update_delivery(delivery_type.delivery_price)
+    delivery_option = request.POST.get('delivery_option')
+    delivery_type = get_object_or_404(DeliveryOptions, id=delivery_option)
+    cart_updated_price = cart.cart_update_delivery(delivery_type.delivery_price)
 
-        session = request.session
+    session = request.session
 
-        if 'purchase' in session:
-            session['purchase']['delivery_id'] = delivery_type.id
-        else:
-            session['purchase'] = {
-                'delivery_id': delivery_type.id
-            }
-        session.modified = True
-        response = JsonResponse({'total': cart_updated_price, 'delivery_price': delivery_type.delivery_price})
-        return response
+    # if 'purchase' in session:
+    #     session['purchase']['delivery_id'] = delivery_type.id
+    # else:
+    session['purchase'] = {
+        'delivery_id': delivery_type.id
+    }
+    session.modified = True
+    response = JsonResponse({'total': cart_updated_price, 'delivery_price': delivery_type.delivery_price})
+    return response
 
 
 @login_required
@@ -47,7 +58,11 @@ def delivery_address(request):
 
     if 'purchase' not in request.session:
         messages.success(request, 'Choose a delivery option')
-        return HttpResponseRedirect(request.META['HTTP_REFERER'])
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+    if not delivery_addresses:
+        messages.success(request, 'Add an address for delivery', {'yes'})
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
     if 'address' not in request.session:
         request.session['address'] = {'address_id': str(delivery_addresses[0].id)}
@@ -59,14 +74,15 @@ def delivery_address(request):
 @login_required
 def payment_selection(request):
     if 'address' not in request.session:
-        messages.success(request, 'Please select and address')
-        return HttpResponseRedirect(request.META['HTTP_REFERER'])
+        messages.success(request, 'Please select an address')
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
     return render(request, 'checkout/payment_selection.html')
 
 
 @login_required
 def payment_successful(request):
-    cart=Cart(request)
+    cart = Cart(request)
     cart.clear()
     return render(request, 'checkout/payment_successful.html', {})
 
