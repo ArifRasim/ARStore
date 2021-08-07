@@ -24,7 +24,7 @@
                     <h1 class="h3">Popular</h1>
                 </div>
                 {% if not page_obj %}
-                    <div class="col-12">There are currently no page_obj active</div>
+                    <h1>There are no products currently.</h1>
                 {% else %}
                     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
                         {% for product in page_obj %}

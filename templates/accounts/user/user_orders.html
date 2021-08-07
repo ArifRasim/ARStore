@@ -6,7 +6,7 @@
     <div class="col-12">
         <h1 class="h2">Manage your Orders</h1>
     </div>
-
+    {% if orders %}
     <div class="container">
         {% for order in orders %}
             <div class="row g-3">
@@ -104,10 +104,12 @@
                     </a>
                 </li>
             {% endif %}
-            {#    <li class="page-item"><a class="page-link" href="#">3</a></li>#}
 
 
         </ul>
     </nav>
+        {% else  %}
+        <p>You dont have any orders yet!</p>
+    {% endif %}
 
 {% endblock %}
