@@ -2,10 +2,8 @@ import uuid
 
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
-from django.core.mail import send_mail
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from django_countries.fields import CountryField
 
 
 # Create your models here.
@@ -51,15 +49,6 @@ class Customer(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = 'Accounts'
         verbose_name_plural = 'Accounts'
-
-    # def email_user(self, subject, message):
-    #     send_mail(
-    #         subject,
-    #         message,
-    #         'l@1.com',
-    #         [self.email],
-    #         fail_silently=False,
-    #     )
 
     def __str__(self):
         return self.name

@@ -24,5 +24,4 @@ urlpatterns = [
                   path('cart/', include('ARStore.apps.cart.urls', namespace='cart')),
                   path('account/', include('ARStore.apps.accounts.urls', namespace='account')),
                   path('checkout/', include('ARStore.apps.checkout.urls', namespace='checkout')),
-                  path('orders/', include('ARStore.apps.orders.urls', namespace='orders')),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

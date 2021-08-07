@@ -1,13 +1,11 @@
-from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 
-# Create your views here.
-from django.urls import reverse, reverse_lazy
-
-from .cart import Cart
 from ARStore.apps.store.models import Product
+from .cart import Cart
+
+
+# Create your views here.
 
 
 def cart_summary(request):
@@ -30,7 +28,6 @@ def cart_add(request):
 def cart_remove(request):
     cart = Cart(request)
 
-
     product_id = request.POST.get('product_id')
     product = get_object_or_404(Product, id=product_id)
     cart.remove(product=product)
@@ -47,7 +44,7 @@ def cart_update(request):
     updated_qty = int(request.POST.get('updated_qty'))
     product = get_object_or_404(Product, id=product_id)
     cart.update(product=product, updated_qty=updated_qty)
-    cart_qty=cart.__len__()
-    cart_total_price=cart.get_total_price()
-    response = JsonResponse({'cart_qty': cart_qty,'cart_total_price':cart_total_price})
+    cart_qty = cart.__len__()
+    cart_total_price = cart.get_total_price()
+    response = JsonResponse({'cart_qty': cart_qty, 'cart_total_price': cart_total_price})
     return response

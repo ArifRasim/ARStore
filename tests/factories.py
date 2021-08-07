@@ -1,5 +1,3 @@
-from unicodedata import category, decimal
-
 import factory
 from factory.django import DjangoModelFactory
 from faker import Faker
@@ -26,7 +24,6 @@ class ProductTypeFactory(DjangoModelFactory):
         model = ProductType
 
     name = 'book'
-    # is_active = True
 
 
 class ProductSpecificationFactory(DjangoModelFactory):
@@ -98,13 +95,14 @@ class CartFactory(DjangoModelFactory):
 class PaymentSelectionsFactory(DjangoModelFactory):
     class Meta:
         model = PaymentSelections
-    name='arif'
 
+    name = 'arif'
 
 
 class DeliveryOptionsFactory(DjangoModelFactory):
     class Meta:
         model = DeliveryOptions
+
     delivery_name = 'Arif Rasim'
     delivery_price = 123
     delivery_method = '123'
@@ -116,6 +114,7 @@ class DeliveryOptionsFactory(DjangoModelFactory):
 class OrderFactory(DjangoModelFactory):
     class Meta:
         model = Order
+
     user = factory.SubFactory(CustomerFactory)
     full_name = 'Arif Rasim'
     address1 = '123'
@@ -130,6 +129,7 @@ class OrderFactory(DjangoModelFactory):
 class OrderItemFactory(DjangoModelFactory):
     class Meta:
         model = OrderItem
+
     product = factory.SubFactory(ProductFactory)
     order = factory.SubFactory(OrderFactory)
     price = 1

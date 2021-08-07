@@ -19,6 +19,7 @@ class Category(MPTTModel):
     slug = models.SlugField(max_length=255, verbose_name=_('Category Url name'), unique=True)
     parent = TreeForeignKey('self', on_delete=models.CASCADE, related_name='children', null=True, blank=True)
     is_active = models.BooleanField(default=True)
+
     class MPPTMeta:
         order_insertion_by = ['name']
 
@@ -76,7 +77,7 @@ class Product(models.Model):
                                          error_messages={'name': {'max_length': _('The price must be max 999.99')}})
     created_at = models.DateTimeField(_('Created at'), auto_now=True, editable=False)
     updated_at = models.DateTimeField(_('Updated at'), auto_now=True, )
-    user_wishlist=models.ManyToManyField(settings.AUTH_USER_MODEL,blank=True,related_name='user_wishlist')
+    user_wishlist = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='user_wishlist')
 
     class Meta:
         verbose_name_plural = _('Products')
@@ -104,7 +105,7 @@ class ProductSpecificationValue(models.Model):
 
 
 class ProductImage(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE,related_name='product_image')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='product_image')
     image = models.ImageField(
         verbose_name=_('Image'),
         default='images/default.png',

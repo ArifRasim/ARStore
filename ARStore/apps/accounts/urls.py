@@ -1,29 +1,16 @@
 from django.contrib.auth import views as auth_views
-from django.contrib.auth.views import PasswordResetView, PasswordResetConfirmView
 from django.urls import path
 from django.views.generic import TemplateView
 
-from ARStore.apps.accounts.forms import UserLoginForm, PwdResetForm, PwdResetConfirmForm
-from ARStore.apps.accounts.views import RegisterView, edit_details, delete_user, addresses_view, \
+from ARStore.apps.accounts.forms import UserLoginForm
+from ARStore.apps.accounts.views import edit_details, delete_user, addresses_view, \
     add_address, edit_address, delete_address, set_default_address, add_to_wishlist, wishlist, user_orders, \
-    DashboardView
+    DashboardView, register_view
 
 app_name = 'account'
 urlpatterns = [
-    path('register/', RegisterView.as_view(), name='register_view'),
-    # path('activate/<slug:uidb64>/<slug:token>', activate_account, name='activate'),
-    path('dashboard/', DashboardView.as_view(),name='dashboard'),
-    path('password_reset/', PasswordResetView.as_view(template_name='accounts/user/password_reset_form.html',
-                                                      success_url='password_reset_email_confirm',
-                                                      email_template_name='accounts/user/password_reset_email.html',
-                                                      form_class=PwdResetForm), name='password_reset_form'),
-    path('password_reset_confirm/<uidb64>/<token>',
-         PasswordResetConfirmView.as_view(template_name='accounts/user/password_reset_confirm.html',
-                                          success_url='password_reset_complete',
-                                          form_class=PwdResetConfirmForm), name='password_reset_confirm'),
-    path('password_reset/password_reset_email_confirm',
-         TemplateView.as_view(template_name='accounts/user/reset_status.html'),
-         name='password_reset_status'),
+    path('register/', register_view, name='register_view'),
+    path('dashboard/', DashboardView.as_view(), name='dashboard'),
     path('login/', auth_views.LoginView.as_view(template_name='accounts/login/login.html', form_class=UserLoginForm, )
          , name='login'),
     path('logout/', auth_views.LogoutView.as_view(next_page='/account/login/'), name='logout'),

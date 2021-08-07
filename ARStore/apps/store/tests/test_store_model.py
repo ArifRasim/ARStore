@@ -26,7 +26,7 @@ def test_product_str(product):
 
 
 def test_product_get_absolute_url(client, product):
-    product= product
+    product = product
     product.get_absolute_url()
     url = reverse('store:product_detail', args=[product.slug])
     response = client.get(url)

@@ -7,12 +7,6 @@ from ARStore.apps.accounts.models import Customer, Address
 class RegisterForm(forms.ModelForm):
     user_name = forms.CharField(
         label='Enter Username', min_length=4, max_length=50, help_text='Required')
-    # first_name = forms.CharField(
-    #     label='Enter Your First Name', min_length=4, max_length=50, help_text='Required'
-    # )
-    # last_name = forms.CharField(
-    #     label='Enter Your Last Name', min_length=4, max_length=50, help_text='Required'
-    # )
     email = forms.EmailField(
         label='Enter Your Email', min_length=4, max_length=110,
         error_messages={'required': 'Sorry you will need an email'}
@@ -71,11 +65,6 @@ class UserEditForm(forms.ModelForm):
         label='Account email (can not be changed)', max_length=200, widget=forms.TextInput(
             attrs={'class': 'form-control mb-3', 'placeholder': 'email', 'id': 'form-email', 'readonly': 'readonly'}))
 
-    # name = forms.CharField(
-    #     label='Firstname', min_length=4, max_length=50, widget=forms.TextInput(
-    #         attrs={'class': 'form-control mb-3', 'placeholder': 'Nname', 'id': 'form-firstname',
-    #                'readonly': 'readonly'}))
-
     name = forms.CharField(
         label='Name', min_length=4, max_length=50, widget=forms.TextInput(
             attrs={'class': 'form-control mb-3', 'placeholder': 'Full Name', 'id': 'form-lastname'}))
@@ -90,7 +79,7 @@ class PwdResetForm(PasswordResetForm):
         attrs={'class': 'form-control mb-3', 'placeholder': 'Email', 'id': 'form-email'}))
 
     def clean_email(self):
-        email = self.cleaned_data.get('email',None)
+        email = self.cleaned_data.get('email', None)
         u = Customer.objects.filter(email=email)
         if not u:
             raise forms.ValidationError(

@@ -1,4 +1,3 @@
-import pytest
 from django.test import Client
 from django.urls import reverse
 
@@ -30,7 +29,6 @@ def test_cart_update(customer, ):
 
 
 def test_delivery_address_view_without_purchase(customer):
-
     client = Client()
     client.force_login(customer)
     response = client.post(reverse('checkout:delivery_address'), )
@@ -39,7 +37,6 @@ def test_delivery_address_view_without_purchase(customer):
 
 
 def test_delivery_address_view_with_purchase_wo_delivery_address(customer):
-
     client = Client()
     client.force_login(customer)
     session = client.session
@@ -68,7 +65,7 @@ def test_delivery_address_view_with_purchase_with_delivery_address(customer):
     client = Client()
     client.force_login(customer)
     session = client.session
-    session['purchase'] = {'delivery_id':delivery_option.id}
+    session['purchase'] = {'delivery_id': delivery_option.id}
     session.save()
     response = client.post(reverse('checkout:delivery_address'), )
     print(response)
@@ -93,8 +90,8 @@ def test_delivery_address_view_with_purchase_with_delivery_address_with_address(
     client = Client()
     client.force_login(customer)
     session = client.session
-    session['purchase'] = {'delivery_id':delivery_option.id}
-    session['address'] = {'address_id':delivery_option.id}
+    session['purchase'] = {'delivery_id': delivery_option.id}
+    session['address'] = {'address_id': delivery_option.id}
     session.save()
     response = client.post(reverse('checkout:delivery_address'), )
     print(response)
@@ -108,11 +105,12 @@ def test_payment_selection_view_without_address(customer):
     print(response)
     assert response.status_code == 302
 
+
 def test_payment_selection_view_with_address(customer):
     client = Client()
     client.force_login(customer)
     session = client.session
-    session['address'] ='address'
+    session['address'] = 'address'
     session.save()
     response = client.post(reverse('checkout:payment_selection'), )
     print(response)
@@ -129,4 +127,3 @@ def test_payment_successful(customer):
     response = client.post(reverse('checkout:payment_successful'), )
     print(response)
     assert response.status_code == 200
-

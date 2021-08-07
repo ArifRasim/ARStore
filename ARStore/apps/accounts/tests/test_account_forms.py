@@ -1,7 +1,5 @@
-from django.core.exceptions import ValidationError
-from django.test import Client
 import pytest
-from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
 
 from ARStore.apps.accounts.forms import UserAddressForm, RegisterForm, PwdResetForm
 
@@ -81,4 +79,3 @@ def test_customer_register_form_username_exists_error(client, customer):
     response = client.post('account/add_address/',
                            data={'full_name': 'name'})
     assert response.status_code == 404
-

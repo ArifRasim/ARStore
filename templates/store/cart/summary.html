@@ -5,23 +5,22 @@
 {% endblock %}
 
 {% block content %}
-{% if not cart %}
-                    <div class="text-center">
-                    <h3 style="text-align: center">Your Cart is empty</h3>
-                    <a href="{% url 'store:all_products' %}"><p>Continue shopping</p></a>
-                    </div>
-                {% else %}
-    <div class="card">
-        <div class="row">
-            <div class="col-md-8 cart">
-                <div class="title">
-                    <div class="row">
-                        <div class="col">
-                            <h4 style="text-align: center"><b>Shopping Cart</b></h4>
+    {% if not cart %}
+        <div class="text-center">
+            <h3 style="text-align: center">Your Cart is empty</h3>
+            <a href="{% url 'store:all_products' %}"><p>Continue shopping</p></a>
+        </div>
+    {% else %}
+        <div class="card">
+            <div class="row">
+                <div class="col-md-8 cart">
+                    <div class="title">
+                        <div class="row">
+                            <div class="col">
+                                <h4 style="text-align: center"><b>Shopping Cart</b></h4>
+                            </div>
                         </div>
-                        {#                        <div class="col align-self-center text-right text-muted">{{ cart|length }} Items</div>#}
                     </div>
-                </div>
 
 
                     {% for product in cart %}
@@ -78,39 +77,28 @@
                             </div>
                         {% endwith %}
                     {% endfor %}
-                    {#                <div class="back-to-shop"><a style="text-align: center;align-content: center" href="/">#}
-                    {#                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"#}
-                    {#                         class="bi bi-arrow-bar-left" viewBox="0 0 16 16">#}
-                    {#                        <path fill-rule="evenodd"#}
-                    {#                              d="M12.5 15a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5zM10 8a.5.5 0 0 1-.5.5H3.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L3.707 7.5H9.5a.5.5 0 0 1 .5.5z"/>#}
-                    {#                    </svg>#}
-                    {#                </a><span class="text-muted">Back to shop</span></div>#}
+
+                </div>
+                <div class="col-md-4 summary">
+                    <div>
+                        <h5><b>Summary</b></h5>
                     </div>
-                    <div class="col-md-4 summary">
-                        <div>
-                            <h5><b>Summary</b></h5>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div id="cart_total_items" class="col">Total amount of items: {{ cart|length }}</div>
-                        </div>
-                        {#                <form>#}
-                        {#                    <p>SHIPPING</p> <select>#}
-                        {#                    <option class="text-muted">Standard-Delivery- &euro;5.00</option>#}
-                        {#                </select>#}
-                        {#                    <p>PROMO CODE</p> <input id="code" placeholder="Enter your code">#}
-                        {#                </form>#}
-                        <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
-                            <div class="col">TOTAL PRICE:</div>
-                            <div id="cart_total_price" class="col text-right">&euro; {{ cart.get_total_price }}</div>
-                        </div>
-                        <a href="{% url 'checkout:delivery_options' %}">
-                            <button type="button" class="btn btn-primary">Checkout</button>
-                        </a>
+                    <hr>
+                    <div class="row">
+                        <div id="cart_total_items" class="col">Total amount of items: {{ cart|length }}</div>
                     </div>
+
+                    <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
+                        <div class="col">TOTAL PRICE:</div>
+                        <div id="cart_total_price" class="col text-right">&euro; {{ cart.get_total_price }}</div>
                     </div>
-                    </div>
-                {% endif %}
+                    <a href="{% url 'checkout:delivery_options' %}">
+                        <button type="button" class="btn btn-primary">Checkout</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
 
     <script>
         $(document).on('click', '.remove-from-cart', function (e) {
@@ -128,6 +116,9 @@
                     console.log(product_id)
                     $('.border-bottom[data-index="' + product_id + '"]').remove()
                     document.getElementById('cart-qty').innerHTML = json.cart_qty
+                    if (json.cart_qty === 0) {
+                        location.reload()
+                    }
                     document.getElementById('cart_total_price').innerHTML = `&euro; ${json.cart_total_price}`
                 },
                 error: function (xhr, errmsg, err) {

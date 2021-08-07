@@ -25,6 +25,8 @@ if os.path.isfile(dotenv_file):
     dotenv.load_dotenv(dotenv_file)
 
 SECRET_KEY = os.environ['SECRET_KEY']
+STRIPE_ENDPOINT_SECRET = os.environ['STRIPE_ENDPOINT_SECRET']
+PUBLISHABLE_KEY = os.environ['PUBLISHABLE_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -142,11 +144,5 @@ AUTH_USER_MODEL = 'accounts.Customer'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/account/login'
-
-STRIPE_ENDPOINT_SECRET = 'whsec_TuquZWBAUBqW5sVnLrXcGqxAuiLn5mAp'
-
-PUBLISHABLE_KEY = 'pk_test_51JEYdQGDKcoJktMz66YmNLt71k9Z39dMl1yBQTbWFh7fJlGUALcA9VP3v2L2f2asaeDQpusFq1DfmvHcRmh0ECOe00bbyuAvbF '
-
-SECRET_KEY = 'sk_test_51JEYdQGDKcoJktMzd3Gu6X8gKtDwg2JSOo9cf59g0ZbcM39JKGisIseNSIUtoRCun8jlm5A4Kaely884kfMhOfvd00mRpeOQ7k'
 
 CART_SESSION_ID = 'cart'

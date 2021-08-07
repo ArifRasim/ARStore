@@ -1,14 +1,8 @@
 import pytest
-from django.urls import reverse
 
 
 def test_customer_str(customer):
     assert customer.__str__() == 'arif'
-
-
-# def test_view(customer):
-#     response = customer.get(reverse('account:edit_view'))
-#     assert response.status_code == 200
 
 
 def test_super_user(admin_user):

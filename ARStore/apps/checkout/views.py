@@ -8,18 +8,12 @@ from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView
 from paypalcheckoutsdk.orders import OrdersGetRequest
 
-from .paypal import PayPalClient
 # Create your views here.
 from ARStore.apps.accounts.models import Address
 from ARStore.apps.cart.cart import Cart
 from ARStore.apps.checkout.models import DeliveryOptions
 from ARStore.apps.orders.models import OrderItem, Order
-
-
-# @login_required
-# def delivery_options(request):
-#     delivery_options = DeliveryOptions.objects.filter(is_active=True)
-#     return render(request, 'checkout/delivery_options.html', {'delivery_options': delivery_options})
+from .paypal import PayPalClient
 
 
 class DeliveryOptionsView(LoginRequiredMixin, ListView):
@@ -41,9 +35,6 @@ def cart_update_delivery(request):
 
     session = request.session
 
-    # if 'purchase' in session:
-    #     session['purchase']['delivery_id'] = delivery_type.id
-    # else:
     session['purchase'] = {
         'delivery_id': delivery_type.id
     }
@@ -97,8 +88,6 @@ def payment_complete(request):
 
     request_order = OrdersGetRequest(data)
     response = PPClient.client.execute(request_order)
-
-    total_paid = response.result.purchase_units[0].amount.value
 
     cart = Cart(request)
     order = Order.objects.create(
