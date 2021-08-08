@@ -54,7 +54,7 @@ class RegisterForm(forms.ModelForm):
 
 class UserLoginForm(AuthenticationForm):
     username = forms.CharField(widget=forms.TextInput(
-        attrs={'class': 'form-control mb-3', 'placeholder': 'Name', 'id': 'login-username'}))
+        attrs={'class': 'form-control mb-3', 'placeholder': 'Email', 'id': 'login-username'}))
 
     password = forms.CharField(widget=forms.PasswordInput(
         attrs={'class': 'form-control ', 'placeholder': 'Password', 'id': 'login-password'}))
@@ -104,20 +104,23 @@ class UserAddressForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["full_name"].widget.attrs.update(
-            {"class": "form-control mb-2 account-form", "placeholder": "Full Name"}
+            {"class": "form-control mb-2 account-form", "placeholder": "Full Name",}
         )
         self.fields["phone"].widget.attrs.update({"class": "form-control mb-2 account-form", "placeholder": "Phone"})
         self.fields["address_line_1"].widget.attrs.update(
             {"class": "form-control mb-2 account-form", "placeholder": "Full Name"}
         )
         self.fields["address_line_1"].widget.attrs.update(
-            {"class": "form-control mb-2 account-form", "placeholder": "address_line_1"})
+            {"class": "form-control mb-2 account-form", "placeholder": "Address"})
         self.fields["address_line_2"].widget.attrs.update(
-            {"class": "form-control mb-2 account-form", "placeholder": "Full Name"}
+            {"class": "form-control mb-2 account-form", "placeholder": "Address"}
         )
         self.fields["city"].widget.attrs.update(
-            {"class": "form-control mb-2 account-form", "placeholder": "Full Name"}
+            {"class": "form-control mb-2 account-form", "placeholder": "City"}
         )
         self.fields["postcode"].widget.attrs.update(
-            {"class": "form-control mb-2 account-form", "placeholder": "Full Name"}
+            {"class": "form-control mb-2 account-form", "placeholder": "Post Code"}
         )
+        self.fields["address_line_1"].label = 'Address 1'
+        self.fields["address_line_2"].label = 'Address 2'
+

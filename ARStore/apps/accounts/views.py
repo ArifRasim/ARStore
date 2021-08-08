@@ -88,7 +88,8 @@ def add_address(request):
             address_form.save()
             return HttpResponseRedirect(reverse('account:addresses'))
         else:
-            return HttpResponse('Bad request!', status=400)
+            messages.success(request, 'There was an error try again')
+            return render(request, 'accounts/user/add_address.html', status=400)
     else:
         address_form = UserAddressForm()
     return render(request, 'accounts/user/add_address.html', {"form": address_form})

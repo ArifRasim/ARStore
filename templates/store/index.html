@@ -29,7 +29,7 @@
                     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
                         {% for product in page_obj %}
 
-                            <div class="card" style=" width: 16rem; margin: 10px;">
+                            <div class="card" style=" width: 16rem; margin: auto;">
                                 {% for image in product.product_image.all %}
                                     {% if image.is_feature %}
                                        <a href="{% url 'store:product_detail' product.slug %}"> <div class="text-center">
@@ -43,8 +43,8 @@
                                                                         <p>Price: €{{ product.price }}</p>
                                 </div>
 
-                                <div class="card-body">
-                                    <button id="add-to-cart" value="{{ product.id }}" type="button" class="btn btn-danger btn-sm">Add to cart</button>
+                                <div class="card-body text-center">
+                                    <button id="add-to-cart" value="{{ product.id }}" type="button" class=" btn btn-danger btn-sm">Add to cart</button>
                                     <a href="{% url 'account:add_to_wishlist' product.id %}"><button type="button" class="btn btn-success btn-sm">Add to wishlist</button></a>
                                 </div>
                             </div>

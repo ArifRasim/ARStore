@@ -30,10 +30,10 @@
                                     <div class="col-md-2 d-none d-md-block">
                                         {% for image in item.product_image.all %}
                                             {% if image.is_feature %}
-                                                <div class="text-center">
-                                                    <img class="rounded" src="{{ image.image.url }}"
-                                                         alt="{{ image.image.alt_text }}">
-                                                </div>
+                                                    <a href="{% url 'store:product_detail' item.slug %}"><img
+                                                            class="img-fluid d-block p-2" width="135px"
+                                                            src="{{ image.image.url }}"
+                                                            alt="{{ image.image.alt_text }}"/></a>
                                             {% endif %}
                                         {% endfor %}
                                     </div>
@@ -42,6 +42,7 @@
                                     </div>
                                     <div class="col">
                                         <div class="row">{{ item.title }}</div>
+
                                     </div>
                                     <div class="col">
                                         <div class="row p-3">

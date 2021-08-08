@@ -61,7 +61,7 @@ class Address(models.Model):
     phone = models.CharField(_('Phone'), max_length=150)
     postcode = models.CharField(_('Post code'), max_length=150)
     address_line_1 = models.CharField(_('Address_line_1'), max_length=250)
-    address_line_2 = models.CharField(_('Address_line_2'), max_length=250)
+    address_line_2 = models.CharField(_('Address_line_2'), max_length=250,blank=True)
     city = models.CharField(_('City'), max_length=150)
     delivery_instructions = models.CharField(_('Delivery instructions'), max_length=150)
     created_at = models.DateTimeField(auto_now=True)
