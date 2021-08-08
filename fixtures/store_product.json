@@ -1,0 +1,79 @@
+[
+    {
+        "category_id": 1,
+        "created_at": "2021-08-03 19:58:49.057950",
+        "description": "qwe",
+        "discount_price": 23,
+        "id": 1,
+        "price": 123,
+        "slug": "kedi",
+        "title": "pisi pisi",
+        "updated_at": "2021-08-03 19:58:49.057950"
+    },
+    {
+        "category_id": 1,
+        "created_at": "2021-08-07 10:18:15.557478",
+        "description": "1aAAAAAAA1aaaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA1aaaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "discount_price": 1,
+        "id": 2,
+        "price": 1,
+        "slug": "1",
+        "title": "laptop hp",
+        "updated_at": "2021-08-07 10:18:15.557478"
+    },
+    {
+        "category_id": 1,
+        "created_at": "2021-08-04 09:12:24.802208",
+        "description": "2",
+        "discount_price": 2,
+        "id": 3,
+        "price": 2,
+        "slug": "2",
+        "title": "samsung s7 edge",
+        "updated_at": "2021-08-04 09:12:24.802208"
+    },
+    {
+        "category_id": 1,
+        "created_at": "2021-08-04 09:12:34.245630",
+        "description": "3",
+        "discount_price": 3,
+        "id": 4,
+        "price": 3,
+        "slug": "3",
+        "title": "headphones razer",
+        "updated_at": "2021-08-04 09:12:34.245630"
+    },
+    {
+        "category_id": 1,
+        "created_at": "2021-08-04 09:12:47.829746",
+        "description": "4",
+        "discount_price": 4,
+        "id": 5,
+        "price": 4,
+        "slug": "4",
+        "title": "camera 500px",
+        "updated_at": "2021-08-04 09:12:47.829746"
+    },
+    {
+        "category_id": 1,
+        "created_at": "2021-08-04 09:13:01.654791",
+        "description": "5",
+        "discount_price": 5,
+        "id": 6,
+        "price": 5,
+        "slug": "5",
+        "title": "laptop lenovo",
+        "updated_at": "2021-08-04 09:13:01.654791"
+    },
+    {
+        "category_id": 2,
+        "created_at": "2021-08-05 13:16:02.850909",
+        "description": "6",
+        "discount_price": 6,
+        "id": 7,
+        "price": 6,
+        "slug": "6",
+        "title": "Atomic Habits",
+        "updated_at": "2021-08-05 13:16:02.850909"
+    }
+]

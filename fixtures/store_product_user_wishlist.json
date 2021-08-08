@@ -1,0 +1,17 @@
+[
+    {
+        "customer_id": 2,
+        "id": 15,
+        "product_id": 2
+    },
+    {
+        "customer_id": 2,
+        "id": 17,
+        "product_id": 4
+    },
+    {
+        "customer_id": 1,
+        "id": 42,
+        "product_id": 2
+    }
+]

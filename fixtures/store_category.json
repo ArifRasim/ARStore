@@ -1,0 +1,24 @@
+[
+    {
+        "id": 1,
+        "is_active": 1,
+        "level": 0,
+        "lft": 1,
+        "name": "Electronics",
+        "parent_id": null,
+        "rght": 2,
+        "slug": "kedi",
+        "tree_id": 1
+    },
+    {
+        "id": 2,
+        "is_active": 1,
+        "level": 0,
+        "lft": 1,
+        "name": "books",
+        "parent_id": null,
+        "rght": 2,
+        "slug": "books",
+        "tree_id": 2
+    }
+]

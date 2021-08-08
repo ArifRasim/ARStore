@@ -1,0 +1,87 @@
+[
+    {
+        "app_label": "auth",
+        "id": 1,
+        "model": "permission"
+    },
+    {
+        "app_label": "auth",
+        "id": 2,
+        "model": "group"
+    },
+    {
+        "app_label": "contenttypes",
+        "id": 3,
+        "model": "contenttype"
+    },
+    {
+        "app_label": "sessions",
+        "id": 4,
+        "model": "session"
+    },
+    {
+        "app_label": "accounts",
+        "id": 5,
+        "model": "customer"
+    },
+    {
+        "app_label": "accounts",
+        "id": 6,
+        "model": "address"
+    },
+    {
+        "app_label": "store",
+        "id": 7,
+        "model": "category"
+    },
+    {
+        "app_label": "store",
+        "id": 8,
+        "model": "product"
+    },
+    {
+        "app_label": "store",
+        "id": 9,
+        "model": "productspecification"
+    },
+    {
+        "app_label": "store",
+        "id": 10,
+        "model": "producttype"
+    },
+    {
+        "app_label": "store",
+        "id": 11,
+        "model": "productspecificationvalue"
+    },
+    {
+        "app_label": "store",
+        "id": 12,
+        "model": "productimage"
+    },
+    {
+        "app_label": "admin",
+        "id": 13,
+        "model": "logentry"
+    },
+    {
+        "app_label": "orders",
+        "id": 14,
+        "model": "order"
+    },
+    {
+        "app_label": "orders",
+        "id": 15,
+        "model": "orderitem"
+    },
+    {
+        "app_label": "checkout",
+        "id": 16,
+        "model": "deliveryoptions"
+    },
+    {
+        "app_label": "checkout",
+        "id": 17,
+        "model": "paymentselections"
+    }
+]

@@ -1,0 +1,58 @@
+[
+    {
+        "address_line_1": "1",
+        "address_line_2": "1",
+        "city": "1",
+        "created_at": "2021-08-03 17:23:54.610026",
+        "customer_id": 2,
+        "default": 1,
+        "delivery_instructions": "",
+        "full_name": "1",
+        "id": "3321f874baaf472ca8cc368b0c7e4c6e",
+        "phone": "1",
+        "postcode": "1",
+        "updated_at": "2021-08-03 17:23:54.610026"
+    },
+    {
+        "address_line_1": "3",
+        "address_line_2": "3",
+        "city": "3",
+        "created_at": "2021-08-04 10:27:58.270368",
+        "customer_id": 1,
+        "default": 0,
+        "delivery_instructions": "3",
+        "full_name": "3",
+        "id": "650031341ae8476eb27b338a70f222fe",
+        "phone": "3",
+        "postcode": "3",
+        "updated_at": "2021-08-04 10:27:58.270368"
+    },
+    {
+        "address_line_1": "4",
+        "address_line_2": "4",
+        "city": "4",
+        "created_at": "2021-08-04 10:28:16.154361",
+        "customer_id": 1,
+        "default": 1,
+        "delivery_instructions": "4",
+        "full_name": "4",
+        "id": "71020505ce834f1aaa2d0630cd0e3408",
+        "phone": "4",
+        "postcode": "4",
+        "updated_at": "2021-08-04 10:28:16.154361"
+    },
+    {
+        "address_line_1": "3",
+        "address_line_2": "3",
+        "city": "3",
+        "created_at": "2021-08-07 10:10:13.294491",
+        "customer_id": 16,
+        "default": 1,
+        "delivery_instructions": "",
+        "full_name": "3",
+        "id": "32c01197ed07453f834cc31774595026",
+        "phone": "3",
+        "postcode": "3",
+        "updated_at": "2021-08-07 10:10:13.294491"
+    }
+]

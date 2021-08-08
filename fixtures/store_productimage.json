@@ -1,0 +1,65 @@
+[
+    {
+        "alt_text": "",
+        "created_at": "2021-08-03 19:58:49.064943",
+        "id": 2,
+        "image": "images/product05.png",
+        "is_feature": 1,
+        "product_id": 1,
+        "updated_at": "2021-08-03 19:58:49.064943"
+    },
+    {
+        "alt_text": "",
+        "created_at": "2021-08-03 19:59:31.244981",
+        "id": 3,
+        "image": "images/product06.png",
+        "is_feature": 1,
+        "product_id": 2,
+        "updated_at": "2021-08-03 19:59:31.244981"
+    },
+    {
+        "alt_text": "",
+        "created_at": "2021-08-03 21:16:36.588441",
+        "id": 4,
+        "image": "images/product07.png",
+        "is_feature": 1,
+        "product_id": 3,
+        "updated_at": "2021-08-03 21:16:36.588441"
+    },
+    {
+        "alt_text": "",
+        "created_at": "2021-08-03 21:16:58.778457",
+        "id": 5,
+        "image": "images/shop03.png",
+        "is_feature": 1,
+        "product_id": 4,
+        "updated_at": "2021-08-03 21:16:58.778457"
+    },
+    {
+        "alt_text": "",
+        "created_at": "2021-08-03 21:17:24.504893",
+        "id": 6,
+        "image": "images/shop02.png",
+        "is_feature": 1,
+        "product_id": 5,
+        "updated_at": "2021-08-03 21:17:24.504893"
+    },
+    {
+        "alt_text": "",
+        "created_at": "2021-08-03 21:17:59.246910",
+        "id": 7,
+        "image": "images/shop01.png",
+        "is_feature": 1,
+        "product_id": 6,
+        "updated_at": "2021-08-03 21:17:59.246910"
+    },
+    {
+        "alt_text": "",
+        "created_at": "2021-08-04 08:55:55.096136",
+        "id": 8,
+        "image": "images/51vSbWpFdS._SX329_BO1204203200__biOeyEF.jpg",
+        "is_feature": 1,
+        "product_id": 7,
+        "updated_at": "2021-08-04 08:55:55.096136"
+    }
+]
