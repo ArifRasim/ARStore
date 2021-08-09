@@ -1,6 +1,6 @@
 Ecommerce Website Created by Arif Rasim.
 
-Website Link: arifrasim3.pythonanywhere.com
+Website Link: http://arifrasim3.pythonanywhere.com
 
 To run this repository you will need to set a .env file with:
 
