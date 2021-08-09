@@ -14,6 +14,8 @@ import dotenv
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+from django.urls import reverse_lazy
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
@@ -146,7 +148,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 AUTH_USER_MODEL = 'accounts.Customer'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = reverse_lazy('store:all_products')
 LOGIN_URL = '/account/login'
 
 CART_SESSION_ID = 'cart'
