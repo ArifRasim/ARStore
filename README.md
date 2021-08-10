@@ -7,4 +7,4 @@ To run this repository you will need to set a .env file with:
 SECRET_KEY, STRIPE_ENDPOINT_SECRET, PUBLISHABLE_KEY, CLIENT_ID, CLIENT_SECRET 
 and database.
 
-For testing exlude everything but ATStore folder.
+For testing exlude everything but ARStore folder.
