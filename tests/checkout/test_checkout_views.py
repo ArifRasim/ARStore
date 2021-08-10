@@ -6,6 +6,12 @@ from ARStore.apps.checkout.models import DeliveryOptions
 
 
 def test_checkout_view(customer):
+    delivery_option = DeliveryOptions.objects.create(delivery_name='Arif Rasim',
+                                                     delivery_price=123,
+                                                     delivery_method='123',
+                                                     delivery_timeframe='123',
+                                                     delivery_window='123',
+                                                     order=1)
     client = Client()
     client.force_login(customer)
     response = client.get(reverse('checkout:delivery_options'))
