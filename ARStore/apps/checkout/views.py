@@ -26,6 +26,9 @@ class DeliveryOptionsView(LoginRequiredMixin, ListView):
         return qs.filter(is_active=True)
 
 
+
+
+
 @login_required
 def cart_update_delivery(request):
     cart = Cart(request)

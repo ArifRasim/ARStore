@@ -7,7 +7,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 # Create your views here.
 from django.urls import reverse
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, CreateView
 
 from ARStore.apps.accounts.forms import RegisterForm, UserEditForm, UserAddressForm
 from ARStore.apps.accounts.models import Customer, Address
@@ -18,6 +18,15 @@ from ARStore.apps.store.models import Product
 class DashboardView(LoginRequiredMixin, TemplateView):
     model = Customer
     template_name = 'accounts/user/dashboard.html'
+
+
+class RegisterView(CreateView):
+    model = Customer
+    fields = ['email','name','password']
+    template_name = 'accounts/register/register.html'
+
+
+
 
 
 def register_view(request):
@@ -33,8 +42,6 @@ def register_view(request):
             user.set_password(form.cleaned_data['password'])
             user.is_active = True
             user.save()
-
-            user.is_active = True
             return render(request, 'accounts/register/account_activation_email.html', )
 
         else:

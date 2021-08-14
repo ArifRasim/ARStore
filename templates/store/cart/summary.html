@@ -121,6 +121,8 @@
                         location.reload()
                     }
                     document.getElementById('cart_total_price').innerHTML = `&euro; ${json.cart_total_price}`
+                    document.getElementById('cart_total_items').innerHTML = `Total amount of items: ${json.cart_qty}`
+
                 },
                 error: function (xhr, errmsg, err) {
                 }

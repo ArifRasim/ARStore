@@ -1,17 +1,16 @@
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
+from django.views.generic import TemplateView
 
 from ARStore.apps.store.models import Product
 from .cart import Cart
 
 
 # Create your views here.
-
-
-def cart_summary(request):
-    cart = Cart(request)
-
-    return render(request, 'store/cart/summary.html', {'cart': cart})
+class CartView(TemplateView):
+    template_name = 'store/cart/summary.html'
+    model = Cart
+    context_object_name = 'cart'
 
 
 def cart_add(request):
@@ -27,7 +26,6 @@ def cart_add(request):
 
 def cart_remove(request):
     cart = Cart(request)
-
     product_id = request.POST.get('product_id')
     product = get_object_or_404(Product, id=product_id)
     cart.remove(product=product)

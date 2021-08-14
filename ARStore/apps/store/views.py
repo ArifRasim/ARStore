@@ -30,6 +30,10 @@ class ProductDetailView(DetailView):
     slug_field = 'slug'  # slug field
 
 
+
+
+
+
 def search_products(request):
     q = request.POST.get('q')
     products = Product.objects.all()
