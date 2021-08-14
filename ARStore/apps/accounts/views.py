@@ -22,11 +22,34 @@ class DashboardView(LoginRequiredMixin, TemplateView):
 
 class RegisterView(CreateView):
     model = Customer
-    fields = ['email','name','password']
+    fields = ['email', 'name', 'password']
     template_name = 'accounts/register/register.html'
 
 
+@login_required
+def delete_user(request):
+    user = Customer.objects.get(id=request.user.id)
+    user.is_active = False
+    user.save()
+    logout(request)
+    return redirect('account:delete_confirm')
 
+
+@login_required
+def delete_address(request, id):
+    Address.objects.get(pk=id, customer=request.user).delete()
+    return HttpResponseRedirect(reverse('account:addresses'))
+
+
+@login_required
+def set_default_address(request, id):
+    Address.objects.filter(default=True, customer=request.user).update(default=False)
+    Address.objects.filter(pk=id, customer=request.user).update(default=True)
+
+    if 'delivery_address' in request.META.get('HTTP_REFERER'):
+        return redirect('checkout:delivery_address')
+    else:
+        return HttpResponseRedirect(reverse('account:addresses'))
 
 
 def register_view(request):
@@ -71,12 +94,16 @@ def edit_details(request):
 
 
 @login_required
-def delete_user(request):
-    user = Customer.objects.get(id=request.user.id)
-    user.is_active = False
-    user.save()
-    logout(request)
-    return redirect('account:delete_confirm')
+def add_to_wishlist(request, id):
+    product = get_object_or_404(Product, id=id)
+    if product.user_wishlist.filter(id=request.user.id).exists():
+        product.user_wishlist.remove(request.user)
+        messages.success(request, 'Removed ' + product.title + ' from your wishlist')
+
+    else:
+        product.user_wishlist.add(request.user)
+        messages.success(request, 'Added ' + product.title + ' to your wishlist')
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 @login_required
@@ -117,36 +144,6 @@ def edit_address(request, id):
     else:
         address_form = UserAddressForm(instance=address)
     return render(request, 'accounts/user/add_address.html', {"form": address_form})
-
-
-@login_required
-def delete_address(request, id):
-    Address.objects.get(pk=id, customer=request.user).delete()
-    return HttpResponseRedirect(reverse('account:addresses'))
-
-
-@login_required
-def set_default_address(request, id):
-    Address.objects.filter(default=True, customer=request.user).update(default=False)
-    Address.objects.filter(pk=id, customer=request.user).update(default=True)
-
-    if 'delivery_address' in request.META.get('HTTP_REFERER'):
-        return redirect('checkout:delivery_address')
-    else:
-        return HttpResponseRedirect(reverse('account:addresses'))
-
-
-@login_required
-def add_to_wishlist(request, id):
-    product = get_object_or_404(Product, id=id)
-    if product.user_wishlist.filter(id=request.user.id).exists():
-        product.user_wishlist.remove(request.user)
-        messages.success(request, 'Removed ' + product.title + ' from your wishlist')
-
-    else:
-        product.user_wishlist.add(request.user)
-        messages.success(request, 'Added ' + product.title + ' to your wishlist')
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 @login_required
