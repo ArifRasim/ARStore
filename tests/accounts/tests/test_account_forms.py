@@ -13,6 +13,7 @@ def test_customer_address_form(full_name, phone, address_line_1, address_line_2,
         data={
             'full_name': full_name, 'phone': phone, 'address_line_1': address_line_1, 'address_line_2': address_line_2,
             'city': city, 'postcode': postcode
+
         }
     )
     assert form.is_valid() is validity
