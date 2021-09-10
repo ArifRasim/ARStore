@@ -1,27 +1,25 @@
-<<<<<<< HEAD
-Ecommerce Website Created by Arif Rasim.
 
-Website Link: http://arifrasim3.pythonanywhere.com
+# Ecommerce Website Created by Arif Rasim.
 
-To run this repository you will need to set a .env file with:
+**Users can browse through the pages to find what they are looking for or use the categories or the search bar. They can register to add their preffered addresses. Add items to their carts or their wishlists edit their profiles. Use Paypal or Stripe as their payment method, control their order history.**
 
-SECRET_KEY, STRIPE_ENDPOINT_SECRET, PUBLISHABLE_KEY, CLIENT_ID, CLIENT_SECRET 
-and a database.
+###### Products can be added only by authorized users through the admin panel.
 
-For testing exclude everything but ARStore folder.
+## Technologies used:
+1. Python,
+2.  Javascript
+3.  Django
+4.  HTML
+5.  CSS
+6.  jQuery
+7.  mptt
+8.  Coverage
+9.  Postgresql
+10. Pytest
+11. Factory-boy
+12. Fixtures 
+13. Bootstrap 
 
-Products can be added only by authorized users through the admin panel.
-=======
-Ecommerce Website Created by Arif Rasim.
+###### The product is completely tested.
+###### Website Link: http://arifrasim3.pythonanywhere.com
 
-Website Link: http://arifrasim3.pythonanywhere.com
-
-To run this repository you will need to set a .env file with:
-
-SECRET_KEY, STRIPE_ENDPOINT_SECRET, PUBLISHABLE_KEY, CLIENT_ID, CLIENT_SECRET 
-and a database.
-
-For testing exclude everything but ARStore folder.
-
-Products can be added only by authorized users through the admin panel.
->>>>>>> bc06e1e6be8fd9db95f7d58c3ad645ee1b9f6624
