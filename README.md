@@ -20,6 +20,6 @@
 12. Fixtures 
 13. Bootstrap 
 
-###### The product is completely tested.
+###### The project is completely tested.
 ###### Website Link: http://arifrasim3.pythonanywhere.com
 
