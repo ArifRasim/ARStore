@@ -22,4 +22,3 @@
 
 ###### The project is completely tested.
 ###### Website Link: http://arifrasim3.pythonanywhere.com
-
