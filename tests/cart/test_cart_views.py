@@ -51,3 +51,4 @@ def test_cart_update(category):
     client = Client()
     response = client.post(reverse('cart:cart_update'), data={'product_id': product.id, 'updated_qty': 1})
     assert response.status_code == 200
+    
