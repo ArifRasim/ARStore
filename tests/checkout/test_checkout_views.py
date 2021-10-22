@@ -52,7 +52,6 @@ def test_delivery_address_view_with_purchase_wo_delivery_address(customer):
     print(response)
     assert response.status_code == 302
 
-
 def test_delivery_address_view_with_purchase_with_delivery_address(customer):
     delivery_address = Address.objects.create(full_name='Arif Rasim',
                                               phone='123',
