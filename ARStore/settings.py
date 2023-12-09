@@ -101,7 +101,7 @@ DATABASES = {
         'PORT': os.environ.get('PORT'),
     },
     'TEST': {
-        'NAME': BASE_DIR / "test_db.sqlite3",
+        'NAME': os.environ.get('TEST_DB_NAME', BASE_DIR / "test_db.sqlite3"),
     }
 }
 
