@@ -100,6 +100,9 @@ DATABASES = {
         'HOST': os.environ.get('HOST'),
         'PORT': os.environ.get('PORT'),
     }
+    'TEST': {
+            'NAME': BASE_DIR / "test_db.sqlite3",
+        }
 }
 
 # Password validation
