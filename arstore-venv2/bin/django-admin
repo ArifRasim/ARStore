@@ -1,4 +1,4 @@
-#!/Users/arifrasim/Desktop/Play/arstore-venv/bin/python3
+#!/Users/arifrasim/Desktop/Play/ARStore/arstore-venv2/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys

@@ -8,7 +8,7 @@ alias deactivate 'test $?_OLD_VIRTUAL_PATH != 0 && setenv PATH "$_OLD_VIRTUAL_PA
 # Unset irrelevant variables.
 deactivate nondestructive
 
-setenv VIRTUAL_ENV "/Users/arifrasim/Desktop/Play/arstore-venv"
+setenv VIRTUAL_ENV "/Users/arifrasim/Desktop/Play/ARStore/arstore-venv2"
 
 set _OLD_VIRTUAL_PATH="$PATH"
 setenv PATH "$VIRTUAL_ENV/bin:$PATH"
@@ -17,8 +17,8 @@ setenv PATH "$VIRTUAL_ENV/bin:$PATH"
 set _OLD_VIRTUAL_PROMPT="$prompt"
 
 if (! "$?VIRTUAL_ENV_DISABLE_PROMPT") then
-    set prompt = "(arstore-venv) $prompt"
-    setenv VIRTUAL_ENV_PROMPT "(arstore-venv) "
+    set prompt = "(arstore-venv2) $prompt"
+    setenv VIRTUAL_ENV_PROMPT "(arstore-venv2) "
 endif
 
 alias pydoc python -m pydoc
