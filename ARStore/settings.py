@@ -91,19 +91,27 @@ WSGI_APPLICATION = 'ARStore.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': os.environ.get('ENGINE', 'default_db_engine'),
-        'NAME': os.environ.get('NAME', 'default_db_name'),
-        'USER': os.environ.get('USER', 'default_db_user'),
-        'PASSWORD': os.environ.get('PASSWORD', 'default_db_password'),
-        'HOST': os.environ.get('HOST', 'default_db_host'),
-        'PORT': os.environ.get('PORT', 'default_db_port'),
-    },
-    'TEST': {
-        'NAME': os.environ.get('TEST_DB_NAME', BASE_DIR / "test_db.sqlite3"),
+if DEBUG is True:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / "db.sqlite3",
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': os.environ.get('ENGINE', 'default_db_engine'),
+            'NAME': os.environ.get('NAME', 'default_db_name'),
+            'USER': os.environ.get('USER', 'default_db_user'),
+            'PASSWORD': os.environ.get('PASSWORD', 'default_db_password'),
+            'HOST': os.environ.get('HOST', 'default_db_host'),
+            'PORT': os.environ.get('PORT', 'default_db_port'),
+        },
+        'TEST': {
+            'NAME': os.environ.get('TEST_DB_NAME', BASE_DIR / "test_db.sqlite3"),
+        }
+    }
 
 
 # Password validation
