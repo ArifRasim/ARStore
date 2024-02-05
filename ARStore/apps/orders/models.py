@@ -23,7 +23,7 @@ class Order(models.Model):
     billing_status = models.BooleanField(default=False)
 
     class Meta:
-        ordering = ('-created_at',)
+        ordering = ('-created_at',"full_name")
 
     def __str__(self):
         return str(self.created_at)
