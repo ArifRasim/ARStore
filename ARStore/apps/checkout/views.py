@@ -56,7 +56,7 @@ def payment_complete(request):
     for item in cart:
         OrderItem.objects.create(order_id=order_id, product=item["product"], price=item["price"], quantity=item["qty"])
 
-    return JsonResponse("Payment completed!", safe=False)
+    return JsonResponse("Payment completed.!", safe=False)
 
 
 @login_required
